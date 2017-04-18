@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>ようこそ、調整君へ</title>
+    </h:head>
+    <h:body>
+        <h1>出欠表を作ろう!</h1>
+        <h:form>
+            イベント名：<h:inputText value="#{inputBean.eventName}" label="イベント名" >
+                <f:validateLength maximum="50" />
+            </h:inputText>
+            <br />
+            メモ：<h:inputTextarea value="#{inputBean.memo}" label="メモ">
+                <f:validateLength maximum="100" />
+            </h:inputTextarea>
+            <br />
+            候補日：<h:inputTextarea value="#{inputBean.candidateDates}" label="候補日">
+                <f:validateLength maximum="100" />
+            </h:inputTextarea>
+            <br />
+            <h:commandButton value="送信" action="#{inputBean.next()}" />
+        </h:form>
+    </h:body>
+</html>
+
