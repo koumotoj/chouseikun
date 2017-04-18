@@ -9,17 +9,24 @@
     <h:body>
         <h1>出欠表を作ろう!</h1>
         <h:form>
-            イベント名：<h:inputText value="#{inputBean.eventName}" label="イベント名" >
+            <h:outputLabel for="event_name">イベント名：</h:outputLabel>
+            <h:inputText id="event_name" value="#{inputBean.eventName}" label="イベント名" required="true" >
                 <f:validateLength maximum="50" />
             </h:inputText>
+            <h:message for="event_name" errorClass="error" />
             <br />
-            メモ：<h:inputTextarea value="#{inputBean.memo}" label="メモ">
+            <h:outputLabel for="memo">メモ：</h:outputLabel>
+            <h:inputTextarea id="memo" value="#{inputBean.memo}" label="メモ">
                 <f:validateLength maximum="100" />
             </h:inputTextarea>
+            <h:message for="memo" errorClass="error" />
             <br />
-            候補日：<h:inputTextarea value="#{inputBean.candidateDates}" label="候補日">
+            <h:outputLabel for="candidate_dates">候補日：</h:outputLabel>
+            <h:inputTextarea id="candidate_dates" value="#{inputBean.candidateDates}" label="候補日" required="true">
                 <f:validateLength maximum="100" />
             </h:inputTextarea>
+            <h:message for="candidate_dates" errorClass="error" />
+
             <br />
             <h:commandButton value="送信" action="#{inputBean.next()}" />
         </h:form>
