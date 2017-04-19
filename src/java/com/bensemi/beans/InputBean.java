@@ -2,8 +2,10 @@ package com.bensemi.beans;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 /**
  *
  * @author koumotoj
@@ -11,9 +13,13 @@ import javax.inject.Named;
 @Named
 @RequestScoped
 public class InputBean {
+    @NotNull
     private String eventName;
     private String memo;
     private String candidateDates;
+    private String chash;
+    @EJB
+    EventDb eventDb;
     
     public InputBean(){
     }
@@ -53,6 +59,8 @@ public class InputBean {
     }
     
     public String getHash(){
+        if(this.chash != null) //hashがnullならキャッシュを返し、それ以外になら計算する。
+            return this.chash;
         MessageDigest md = null;
         try{
             md = MessageDigest.getInstance("SHA-256");
@@ -73,6 +81,25 @@ public class InputBean {
     }
     
     public String next(){
+        createData();
         return "WEB-INF/newEvent.xhtml";
+    }
+    
+    public void createData(){
+        Event event = new Event(this.eventName, this.memo, this.candidateDates, getHash());
+        try{
+            eventDb.create(event);
+            clear();
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("eventデータを保存できません");
+        }
+    }
+    
+    public void clear(){
+        this.eventName = null;
+        this.memo = null;
+        this.candidateDates = null;
+        this.chash = null;
     }
 }
